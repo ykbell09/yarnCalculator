@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
+
+:root {
+    --grey: #41393b;
+    --ltgreen: #61988e;
+    --offwhite: #fffbfe;
+    --dkgreen: #04313a;
+    --orange: #f6b378;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: var(--grey);
+}
+
+body {
+    margin: 0;
+    background-color: var(--offwhite);
+}
+
+
+ /* universal element and section classes */
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(48, 46, 46, 0.2);
+}
+
+.border {
+    border-radius: 30px;
+    border: thin solid var(--grey);
+}
+
+/* typography */
+
+h1, 
+h2 {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    color: var(--dkgreen);
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+h3 {
+    font-weight: 300; 
+    text-transform: uppercase;
+}
+
+h4 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* main section */
+main {
+    margin: 50px;
+}
+
+#intro {
+    text-align: center;
+}
+
+fieldset {
+    padding: 0 50px 25px 50px;
+}
+
+.input-data {
+    text-align: center;
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid var(--orange);
+    
+}
+
+.button {
+    margin-top: 30px;
+    border: none;
+    border-radius: 30px;
+    font: inherit;
+    color: var(--offwhite);
+    padding: 5px 10px 5px 10px;
+    text-transform: uppercase;
+    background-color: var(--ltgreen);
+}
+
+.button:hover,
+.button:active {
+    border: none;
+    background-color: var(--dkgreen);
+}
+
+.button:active {
+    opacity: .8;
+}
