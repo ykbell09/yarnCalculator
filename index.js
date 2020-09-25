@@ -60,7 +60,7 @@ window.onload = () => {
                 <th>yards per skein</th>
                 <th>skeins needed</th>
                 <th>cost per skein</th>
-                <th>total cost</th>
+                <th id="sort-total" class="sort-option">total cost</th>
                 <th class="td-center"></th>
            </tr>
         `
@@ -123,8 +123,18 @@ window.onload = () => {
                 totalInput = totalCost.toFixed(2);
             } else {
                 totalInput = '0.00';
-            }
+            }         
             newRow.insertCell().innerHTML = `<p class="calculated" id="total-cost">$${totalInput}</p>`;
+            
+            const removeButton = newRow.insertCell();
+            removeButton.innerHTML = '<button class="button" id="remove-button">x</button>';
+            removeButton.addEventListener('click', () => {
+                yarns.splice(i, 1);
+                saveData();
+                displayData();
+            });
+
+            
         }
     };
 
@@ -171,17 +181,27 @@ window.onload = () => {
         displayData();
     });
 
-
     // clear comparison all comparison table data 
     document.querySelector('#button-clear-cost').addEventListener('click', (e) => {
         e.preventDefault();
         clearData();
     });
 
+    // add a blank row
     document.querySelector('#button-add-tr').addEventListener('click', (e) => {
         e.preventDefault();
         addRow();
     });
 
+    // // sort table by total cost
+    // document.querySelector('#sort-total').addEventListener('click', () => {
+
+    //     const test = yarns.sort();
+    //     console.log(test);
+
+
+
+
+    // });
 
 };
