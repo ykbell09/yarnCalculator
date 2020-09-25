@@ -60,12 +60,13 @@ main {
     margin: 50px;
 }
 
-#intro {
+.heading {
     text-align: center;
 }
 
 fieldset {
     padding: 0 50px 25px 50px;
+    margin-bottom: 50px;
 }
 
 .input-data {
@@ -78,8 +79,10 @@ fieldset {
     
 }
 
+/* buttons */
+
 .button {
-    margin-top: 30px;
+    /* margin-top: 30px; */
     border: none;
     border-radius: 30px;
     font: inherit;
@@ -97,4 +100,44 @@ fieldset {
 
 .button:active {
     opacity: .8;
+}
+
+.total-buttons {
+    margin-top: 30px;
+}
+
+/* tables */
+th {
+    background-color: var(--ltgreen);
+    color: var(--offwhite);
+    padding: 5px;
+}
+
+table, td {
+    border-bottom: thin solid var(--grey);
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    overflow: scroll;
+}
+
+.input-table {
+    border: none;
+    background-color: transparent;
+    border-bottom: 3px solid var(--orange);
+
+}
+
+.td-center {
+    text-align: center;
+}
+
+.calculated {
+    font-weight: bold;
 }

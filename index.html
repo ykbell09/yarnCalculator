@@ -11,32 +11,63 @@
 
 <body>
     <main>
-        <section id="intro">
-            <h3>how much is left in that stash yarn?!</h3>
+        <section>
+            <div class="heading">
+                <h3>how much is left in that stash yarn?!</h3>
+            </div>
+            <form>
+                <fieldset class="border">
+                    <legend>
+                        <h1>Yarn Length Calclulator</h1>
+                    </legend>
+                    <h4>yarn label information:</h4>
+                    <input class="input-data" type="number" name="grams" id="grams" min="1" />
+                    <label for="grams">grams</label>
+                    <span>/</span>
+                    <input class="input-data" type="number" name="yard" id="yards" min="1" />
+                    <label for="yards">yards</label>
+                    <br />
+                    <h4>current yarn stash weight:</h4>
+                    <input class="input-data" type="number" name="weight" id="weight" min="1" />
+                    <label for="weight">grams</label>
+                    <div class="total-buttons">
+                        <input class="button" type="submit" value="calculate" id="button-calculate" />
+                        <input class="button" type="reset" value="clear" id="button-clear" />
+                    </div>
+                    <h2 id="yarn-length"></h2>
+                </fieldset>
+            </form>
         </section>
-        <form>
 
-            <fieldset class="border">
-                <legend>
-                    <h1>Yarn Length Calclulator</h1>
-                </legend>
-                <h4>yarn label information:</h4>
-                <input class="input-data" type="number" name="grams" id="grams" min="1" />
-                <label for="grams">grams</label>
-                <span>/</span>
-                <input class="input-data" type="number" name="yard" id="yards" min="1" />
-                <label for="yards">yards</label>
-                <br />
-                <h4>current yarn stash weight:</h4>
-                <input class="input-data" type="number" name="weight" id="weight" min="1" />
-                <label for="weight">grams</label>
-                <br />
-                <input class="button" type="submit" value="calculate" id="button-calculate" />
-                <input class="button" type="reset" value="clear" id="button-clear" />
-                <h2 id="yarn-length"></h2>
-            </fieldset>
+        <section>
+            <div class="heading">
+                <h3>how many skeins do I need to make that thing?</h3>
+            </div>
+            <form>
+                <fieldset class="border">
+                    <legend>
+                        <h1>Skein Quantity & Cost Calculator</h1>
+                    </legend>
+                    <label for="pattern-yards"><h4>pattern yardage:</h4></label>
+                    <input class="input-data" type="text" name="pattern-yards" id="pattern-yards" />
+                    <h4>yarn comparison:</h4>
+                    <table>
+                        <tbody id="table-comparison">
 
-        </form>
+                        </tbody>
+                    </table>
+                    <div class="total-buttons">
+
+                        <button class="button" id="button-add-tr">add a row</button>
+                        <!-- <input class="button" type="submit" value="calculate" id="button-calculate-cost" /> -->
+                        <input class="button" type="reset" value="clear" id="button-clear-cost" />
+                    </div>
+                    <h2 id="skein-quantity"></h2>
+                </fieldset>
+
+            </form>
+        </section>
+
     </main>
 </body>
 
