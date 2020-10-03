@@ -67,6 +67,7 @@ main {
 fieldset {
     padding: 0 50px 25px 50px;
     margin-bottom: 50px;
+    max-width: 100vw;
 }
 
 .input-data {
@@ -124,7 +125,6 @@ th, td {
 
 table {
     width: 100%;
-    overflow: scroll;
 }
 
 .input-table {
@@ -142,6 +142,6 @@ table {
     font-weight: bold;
 }
 
-/* .sort-option {
+.sort-option {
     cursor: pointer;
-} */
+}

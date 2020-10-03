@@ -29,7 +29,8 @@ window.onload = () => {
 
     // global variables
     let yarns = [];
-    let patternYards;
+    let pattern;
+    const patternNameInput = document.querySelector('#pattern-name');
     const patternYardsInput = document.querySelector('#pattern-yards');
     const table = document.querySelector('#table-comparison');
 
@@ -37,6 +38,11 @@ window.onload = () => {
         name: '',
         yardsPer: '',
         costPer: ''
+    };
+
+    const defaultPattern = {
+        name: '',
+        yards: ''
     };
 
 
@@ -47,26 +53,30 @@ window.onload = () => {
             yarns = [defaultData];
         }
 
-        patternYards = JSON.parse(localStorage.getItem('patternYards'));
-        if (!patternYards) {
-            patternYards = '';
+        pattern = JSON.parse(localStorage.getItem('pattern'));
+        if (!pattern) {
+            pattern = defaultPattern;
         }
     };
 
     const displayData = () => {
+        console.log(pattern);
+
         table.innerHTML = `
             <tr>
-                <th>yarn name</th>
-                <th>yards per skein</th>
-                <th>skeins needed</th>
-                <th>cost per skein</th>
-                <th id="sort-total" class="sort-option">total cost</th>
-                <th class="td-center"></th>
+                <th scope="col">yarn name</th>
+                <th scope="col">yards per skein</th>
+                <th scope="col">skeins needed</th>
+                <th scope="col">cost per skein</th>
+                <th scope="col" id="sort-total" class="sort-option">total cost</th>
+                <th scope="col" class="td-center"></th>
            </tr>
         `
         loadData();
-        patternYardsInput.value = patternYards;
 
+        patternNameInput.value = pattern.name;
+        patternYardsInput.value = pattern.yards;
+        
         for (let i = 0; i < yarns.length; i++) {
             const yarn = yarns[i];
             const newRow = table.insertRow();
@@ -95,7 +105,7 @@ window.onload = () => {
             });
 
             // calculated cell -- skeins needed
-            const skeinsNeeded = patternYards / yarn.yardsPer;
+            const skeinsNeeded = pattern.yards / yarn.yardsPer;
             let skeinInput;
             if (skeinsNeeded !== Infinity && skeinsNeeded > 0) {
                 skeinInput = Math.ceil(skeinsNeeded);
@@ -125,6 +135,9 @@ window.onload = () => {
                 totalInput = '0.00';
             }         
             newRow.insertCell().innerHTML = `<p class="calculated" id="total-cost">$${totalInput}</p>`;
+            yarn.total = totalInput;
+            console.log(yarn.total);
+            console.log(yarns);
             
             const removeButton = newRow.insertCell();
             removeButton.innerHTML = '<button class="button" id="remove-button">x</button>';
@@ -139,13 +152,13 @@ window.onload = () => {
     };
 
     const saveData = () => {
-        localStorage.setItem('patternYards', JSON.stringify(patternYards));
+        localStorage.setItem('pattern', JSON.stringify(pattern));
         localStorage.setItem('yarns', JSON.stringify(yarns));
     };
 
     const clearData = () => {
         yarns = [defaultData];
-        patternYards = '';
+        pattern = defaultPattern;
         saveData();
         displayData();
     };
@@ -176,9 +189,14 @@ window.onload = () => {
 
     // update new pattern yardage data and calculations
     patternYardsInput.addEventListener('blur', () => {
-        patternYards = patternYardsInput.value;
+        pattern.yards = patternYardsInput.value;
         saveData();
         displayData();
+    });
+
+    patternNameInput.addEventListener('blur', () => {
+        pattern.name = patternNameInput.value;
+        saveData();
     });
 
     // clear comparison all comparison table data 
