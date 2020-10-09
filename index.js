@@ -13,7 +13,6 @@ window.onload = () => {
     };
 
     const updateDisplay = (length) => {
-
         let message;
         if (length > 0) {
             message = `approximate stash yarn length: ${length} yards`;
@@ -22,7 +21,6 @@ window.onload = () => {
         }
 
         yarnMessage.innerHTML = message;
-
     };
 
     // --- yarn comparison table ---
@@ -45,7 +43,6 @@ window.onload = () => {
         yards: ''
     };
 
-
     // check local storage for data to populate table
     const loadData = () => {
         yarns = JSON.parse(localStorage.getItem('yarns'));
@@ -60,23 +57,31 @@ window.onload = () => {
     };
 
     const displayData = () => {
-        console.log(pattern);
 
         table.innerHTML = `
             <tr>
                 <th scope="col">yarn name</th>
                 <th scope="col">yards per skein</th>
                 <th scope="col">skeins needed</th>
-                <th scope="col">cost per skein</th>
+                <th scope="col" id="sort-cost" class="sort-option">cost per skein</th>
                 <th scope="col" id="sort-total" class="sort-option">total cost</th>
                 <th scope="col" class="td-center"></th>
            </tr>
         `
+        
+        // add sorting event listeners
+        document.querySelector('#sort-total').addEventListener('click', () => {
+            sortByTotal();
+        });
+        document.querySelector('#sort-cost').addEventListener('click', () => {
+            sortByCost();
+        });
+
         loadData();
 
         patternNameInput.value = pattern.name;
         patternYardsInput.value = pattern.yards;
-        
+
         for (let i = 0; i < yarns.length; i++) {
             const yarn = yarns[i];
             const newRow = table.insertRow();
@@ -127,18 +132,16 @@ window.onload = () => {
             });
 
             // calculated cell -- total cost      
-            const totalCost = yarn.costPer * skeinsNeeded;
+            const totalCost = yarn.costPer * skeinInput;
             let totalInput;
             if (totalCost > 0) {
                 totalInput = totalCost.toFixed(2);
             } else {
                 totalInput = '0.00';
-            }         
+            }
             newRow.insertCell().innerHTML = `<p class="calculated" id="total-cost">$${totalInput}</p>`;
             yarn.total = totalInput;
-            console.log(yarn.total);
-            console.log(yarns);
-            
+
             const removeButton = newRow.insertCell();
             removeButton.innerHTML = '<button class="button" id="remove-button">x</button>';
             removeButton.addEventListener('click', () => {
@@ -147,7 +150,7 @@ window.onload = () => {
                 displayData();
             });
 
-            
+
         }
     };
 
@@ -170,6 +173,70 @@ window.onload = () => {
         displayData();
     };
 
+    // --- sorting variables --- 
+    let totalSortState;
+    let costSortState;
+
+    // --- sorting functions ---
+    const sortByTotal = () => {
+        
+
+        // sorting helper functions, to be used with array.sort()
+        const sortAsc = (a, b) => {
+            const yarnA = parseFloat(a.total);
+            const yarnB = parseFloat(b.total);
+            if (yarnA < yarnB) return -1;
+            if (yarnA > yarnB) return 1;
+            return 0;
+        };
+
+        const sortDesc = (a, b) => {
+            return sortAsc(a, b) * -1;
+        };
+
+        // check state and sort opposite
+        if (totalSortState === undefined || totalSortState === 'descending') {
+            yarns.sort(sortAsc);
+            totalSortState = 'ascending';
+        } else {
+            yarns.sort(sortDesc);
+            totalSortState = 'descending';
+        }
+
+        saveData();
+        displayData();
+        costSortState = undefined;
+
+    };
+    
+    const sortByCost = () => {
+        
+        // sorting helper functions, to be used with array.sort()
+        const sortAsc = (a, b) => {
+            const yarnA = parseFloat(a.costPer);
+            const yarnB = parseFloat(b.costPer);
+            if (yarnA < yarnB) return -1;
+            if (yarnA > yarnB) return 1;
+            return 0;
+        };
+        
+        const sortDesc = (a, b) => {
+            return sortAsc(a, b) * -1;
+        };
+        
+        // check state and sort opposite
+        if (costSortState === undefined || costSortState === 'descending') {
+            yarns.sort(sortAsc);
+            costSortState = 'ascending';
+        } else {
+            yarns.sort(sortDesc);
+            costSortState = 'descending';
+        }
+
+        saveData();
+        displayData();
+        totalSortState = undefined;
+    };
 
     // --- initialize page display ---
     displayData();
@@ -199,7 +266,7 @@ window.onload = () => {
         saveData();
     });
 
-    // clear comparison all comparison table data 
+    // clear all comparison table data 
     document.querySelector('#button-clear-cost').addEventListener('click', (e) => {
         e.preventDefault();
         clearData();
@@ -210,16 +277,5 @@ window.onload = () => {
         e.preventDefault();
         addRow();
     });
-
-    // // sort table by total cost
-    // document.querySelector('#sort-total').addEventListener('click', () => {
-
-    //     const test = yarns.sort();
-    //     console.log(test);
-
-
-
-
-    // });
 
 };
