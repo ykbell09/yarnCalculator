@@ -61,20 +61,26 @@ window.onload = () => {
         table.innerHTML = `
             <tr>
                 <th scope="col">yarn name</th>
-                <th scope="col">yards per skein</th>
-                <th scope="col">skeins needed</th>
+                <th scope="col" id="sort-yards" class="sort-option">yards per skein</th>
+                <th scope="col" id="sort-skeins" class="sort-option">skeins needed</th>
                 <th scope="col" id="sort-cost" class="sort-option">cost per skein</th>
                 <th scope="col" id="sort-total" class="sort-option">total cost</th>
                 <th scope="col" class="td-center"></th>
            </tr>
         `
-        
+
         // add sorting event listeners
         document.querySelector('#sort-total').addEventListener('click', () => {
-            sortByTotal();
+            sortColumn('total');
         });
         document.querySelector('#sort-cost').addEventListener('click', () => {
-            sortByCost();
+            sortColumn('costPer');
+        });
+        document.querySelector('#sort-skeins').addEventListener('click', () => {
+            sortColumn('skeins');
+        });
+        document.querySelector('#sort-yards').addEventListener('click', () => {
+            sortColumn('yardsPer');
         });
 
         loadData();
@@ -118,6 +124,7 @@ window.onload = () => {
                 skeinInput = '';
             }
             newRow.insertCell().innerHTML = `<p class="calculated" id="skeins-needed">${skeinInput}</p>`;
+            yarn.skeins = skeinInput;
 
             // add cost per
             const costPer = newRow.insertCell();
@@ -149,8 +156,6 @@ window.onload = () => {
                 saveData();
                 displayData();
             });
-
-
         }
     };
 
@@ -173,69 +178,43 @@ window.onload = () => {
         displayData();
     };
 
-    // --- sorting variables --- 
-    let totalSortState;
-    let costSortState;
-
     // --- sorting functions ---
-    const sortByTotal = () => {
-        
 
-        // sorting helper functions, to be used with array.sort()
-        const sortAsc = (a, b) => {
-            const yarnA = parseFloat(a.total);
-            const yarnB = parseFloat(b.total);
+    // sorting variables
+    let columnStates = {};
+
+    // sorting helper functions
+    const sortAsc = (prop) => {
+
+        yarns.sort(function (a, b) {
+            const yarnA = parseFloat(a[prop]);
+            const yarnB = parseFloat(b[prop]);
             if (yarnA < yarnB) return -1;
             if (yarnA > yarnB) return 1;
             return 0;
-        };
-
-        const sortDesc = (a, b) => {
-            return sortAsc(a, b) * -1;
-        };
-
-        // check state and sort opposite
-        if (totalSortState === undefined || totalSortState === 'descending') {
-            yarns.sort(sortAsc);
-            totalSortState = 'ascending';
-        } else {
-            yarns.sort(sortDesc);
-            totalSortState = 'descending';
-        }
-
-        saveData();
-        displayData();
-        costSortState = undefined;
-
+        });
     };
-    
-    const sortByCost = () => {
-        
-        // sorting helper functions, to be used with array.sort()
-        const sortAsc = (a, b) => {
-            const yarnA = parseFloat(a.costPer);
-            const yarnB = parseFloat(b.costPer);
-            if (yarnA < yarnB) return -1;
-            if (yarnA > yarnB) return 1;
-            return 0;
-        };
-        
-        const sortDesc = (a, b) => {
-            return sortAsc(a, b) * -1;
-        };
+
+    const sortColumn = (prop) => {
         
         // check state and sort opposite
-        if (costSortState === undefined || costSortState === 'descending') {
-            yarns.sort(sortAsc);
-            costSortState = 'ascending';
+        if (columnStates[prop] === undefined || columnStates[prop] === 'descending') {
+            sortAsc(prop);
+            columnStates[prop] = 'ascending';
         } else {
-            yarns.sort(sortDesc);
-            costSortState = 'descending';
+            sortAsc(prop);
+            yarns.reverse();
+            columnStates[prop] = 'descending';
         }
 
         saveData();
         displayData();
-        totalSortState = undefined;
+
+        for (let key in columnStates) {
+            if (key != prop) {
+                columnStates[key] = undefined;
+            }
+        }
     };
 
     // --- initialize page display ---
