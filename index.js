@@ -62,11 +62,11 @@ window.onload = () => {
 
         table.innerHTML = `
             <tr>
-                <th scope="col">yarn name</th>
-                <th scope="col" id="sort-yards" class="sort-option">yards per skein ${sortArrow}</th>
-                <th scope="col" id="sort-skeins" class="sort-option">skeins needed ${sortArrow}</th>
-                <th scope="col" id="sort-cost" class="sort-option">cost per skein ${sortArrow}</th>
-                <th scope="col" id="sort-total" class="sort-option">total cost ${sortArrow}</th>
+                <th scope="col" class="name">yarn name</th>
+                <th scope="col" id="sort-yards" class="sort-option num">yards per skein ${sortArrow}</th>
+                <th scope="col" id="sort-skeins" class="sort-option num">skeins needed ${sortArrow}</th>
+                <th scope="col" id="sort-cost" class="sort-option num">cost per skein ${sortArrow}</th>
+                <th scope="col" id="sort-total" class="sort-option num">total cost ${sortArrow}</th>
                 <th scope="col" class="td-center"></th>
            </tr>
         `
@@ -97,7 +97,7 @@ window.onload = () => {
             // add the name
             const name = newRow.insertCell();
             const nameInput = document.createElement('input');
-            nameInput.className = 'input-table';
+            nameInput.className = 'input-table name';
             nameInput.value = yarn.name;
             name.appendChild(nameInput);
             nameInput.addEventListener('blur', () => {
@@ -108,7 +108,7 @@ window.onload = () => {
             // add yards per
             const yardsPer = newRow.insertCell();
             const yardsPerInput = document.createElement('input');
-            yardsPerInput.className = 'input-table';
+            yardsPerInput.className = 'input-table num';
             yardsPerInput.value = yarn.yardsPer;
             yardsPer.appendChild(yardsPerInput);
             yardsPerInput.addEventListener('blur', () => {
@@ -131,7 +131,7 @@ window.onload = () => {
             // add cost per
             const costPer = newRow.insertCell();
             const costPerInput = document.createElement('input');
-            costPerInput.className = 'input-table';
+            costPerInput.className = 'input-table num';
             costPerInput.value = yarn.costPer;
             costPer.appendChild(costPerInput);
             costPerInput.addEventListener('blur', () => {

@@ -21,6 +21,12 @@ body {
     background-color: var(--offwhite);
 }
 
+@media only screen and (min-width: 1032px) {
+    body {
+        max-width: 1200px;
+        margin: auto;
+    }
+}
 
  /* universal element and section classes */
 .shadow {
@@ -131,7 +137,6 @@ table {
     border: none;
     background-color: transparent;
     border-bottom: 3px solid var(--orange);
-
 }
 
 .td-center {
@@ -161,4 +166,14 @@ table {
 
 .sort-arrow-desc {
     transform: rotate(180deg);
+}
+
+@media only screen and (max-width: 812px) {  
+    .num {
+        max-width: 7ch;
+    }
+
+    .name {
+        max-width: 15ch;
+    }
 }
