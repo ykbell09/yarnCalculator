@@ -145,3 +145,20 @@ table {
 .sort-option {
     cursor: pointer;
 }
+
+/* sort arrows */
+.sort-arrow {
+    width: 15px;
+    opacity: 50%;
+}
+
+.sort-arrow:hover,
+.sort-arrow-asc,
+.sort-arrow-desc {
+    opacity: 100%;
+    width: 15px;
+}
+
+.sort-arrow-desc {
+    transform: rotate(180deg);
+}

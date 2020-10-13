@@ -58,29 +58,31 @@ window.onload = () => {
 
     const displayData = () => {
 
+        const sortArrow = '<img src="icon_arrow.png" class="sort-arrow" />';
+
         table.innerHTML = `
             <tr>
                 <th scope="col">yarn name</th>
-                <th scope="col" id="sort-yards" class="sort-option">yards per skein</th>
-                <th scope="col" id="sort-skeins" class="sort-option">skeins needed</th>
-                <th scope="col" id="sort-cost" class="sort-option">cost per skein</th>
-                <th scope="col" id="sort-total" class="sort-option">total cost</th>
+                <th scope="col" id="sort-yards" class="sort-option">yards per skein ${sortArrow}</th>
+                <th scope="col" id="sort-skeins" class="sort-option">skeins needed ${sortArrow}</th>
+                <th scope="col" id="sort-cost" class="sort-option">cost per skein ${sortArrow}</th>
+                <th scope="col" id="sort-total" class="sort-option">total cost ${sortArrow}</th>
                 <th scope="col" class="td-center"></th>
            </tr>
         `
 
         // add sorting event listeners
         document.querySelector('#sort-total').addEventListener('click', () => {
-            sortColumn('total');
+            sortColumn('#sort-total','total');
         });
         document.querySelector('#sort-cost').addEventListener('click', () => {
-            sortColumn('costPer');
+            sortColumn('#sort-cost','costPer');
         });
         document.querySelector('#sort-skeins').addEventListener('click', () => {
-            sortColumn('skeins');
+            sortColumn('#sort-skeins','skeins');
         });
         document.querySelector('#sort-yards').addEventListener('click', () => {
-            sortColumn('yardsPer');
+            sortColumn('#sort-yards','yardsPer');
         });
 
         loadData();
@@ -185,7 +187,6 @@ window.onload = () => {
 
     // sorting helper functions
     const sortAsc = (prop) => {
-
         yarns.sort(function (a, b) {
             const yarnA = parseFloat(a[prop]);
             const yarnB = parseFloat(b[prop]);
@@ -195,7 +196,17 @@ window.onload = () => {
         });
     };
 
-    const sortColumn = (prop) => {
+    const rotateArrow = (id, prop) => {
+        const arrow = document.querySelector([id]).lastChild;
+        if (columnStates[prop] === 'ascending') {
+            arrow.className = "sort-arrow-asc";
+        } else if (columnStates[prop] === 'descending') {
+            arrow.className = "sort-arrow-desc";
+        }
+    };
+
+
+    const sortColumn = (id, prop) => {
         
         // check state and sort opposite
         if (columnStates[prop] === undefined || columnStates[prop] === 'descending') {
@@ -215,7 +226,10 @@ window.onload = () => {
                 columnStates[key] = undefined;
             }
         }
+
+        rotateArrow(id, prop);
     };
+
 
     // --- initialize page display ---
     displayData();
