@@ -175,6 +175,9 @@ window.onload = () => {
         yarns.push(newYarn);
         saveData();
         displayData();
+
+        // (this seems a little convoluted, but it works for now ...)
+        table.lastElementChild.firstElementChild.firstElementChild.focus();
     };
 
     // --- sorting functions ---
