@@ -114,7 +114,6 @@ window.onload = () => {
             yardsPerInput.addEventListener('blur', () => {
                 yarn.yardsPer = yardsPerInput.value;
                 saveData();
-                displayData();
             });
 
             // calculated cell -- skeins needed
@@ -137,7 +136,6 @@ window.onload = () => {
             costPerInput.addEventListener('blur', () => {
                 yarn.costPer = costPerInput.value;
                 saveData();
-                displayData();
             });
 
             // calculated cell -- total cost      
@@ -156,7 +154,6 @@ window.onload = () => {
             removeButton.addEventListener('click', () => {
                 yarns.splice(i, 1);
                 saveData();
-                displayData();
             });
         }
     };
@@ -205,7 +202,6 @@ window.onload = () => {
         }
     };
 
-
     const sortColumn = (id, prop) => {
         
         // check state and sort opposite
@@ -229,7 +225,6 @@ window.onload = () => {
 
         rotateArrow(id, prop);
     };
-
 
     // --- initialize page display ---
     displayData();
@@ -257,6 +252,12 @@ window.onload = () => {
     patternNameInput.addEventListener('blur', () => {
         pattern.name = patternNameInput.value;
         saveData();
+    });
+
+    // calculate input data
+    document.querySelector('#button-compare').addEventListener('click', (e) => {
+        e.preventDefault();
+        displayData();
     });
 
     // clear all comparison table data 
